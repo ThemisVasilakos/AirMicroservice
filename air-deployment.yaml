@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: air-microservice
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: air-microservice
+  template:
+    metadata:
+      labels:
+        app: air-microservice
+    spec:
+      containers:
+        - name: air-microservice
+          image: "themisvas/air-microservice:latest"
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATA_MONGODB_HOST
+              value: air-mongodb
+            - name: SPRING_DATA_MONGODB_PORT
+              value: "27017"
+            - name: SPRING_DATA_MONGODB_DATABASE
+              value: air
+            - name: SPRING_DATA_MONGODB_AUTHENTICATION
+              value: admin
+            - name: SPRING_RABBITMQ_HOST
+              value: rabbitmq
+            - name: SPRING_RABBITMQ_PORT
+              value: "5672"
+            - name: SPRING_RABBITMQ_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secret
+                  key: rabbitmq-username
+            - name: SPRING_RABBITMQ_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rabbitmq-secret
+                  key: rabbitmq-password
+            - name: RABBITMQ_AIR_QUEUE_NAME
+              value: air.notification.queue
+            - name: RABBITMQ_EXCHANGE_NAME
+              value: notification.exchange
+            - name: RABBITMQ_AIR_ROUTING_KEY
+              value: air.queue.user.notification

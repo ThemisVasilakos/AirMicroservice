@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: air-mongodb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: air-mongodb
+  template:
+    metadata:
+      labels:
+        app: air-mongodb
+    spec:
+      containers:
+        - name: air-mongodb
+          image: mongo:latest
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: air-mongodb-data
+              mountPath: /data/db
+  volumes:
+    - name: air-mongodb-data
+      persistentVolumeClaim:
+        claimName: air-mongodb-data
