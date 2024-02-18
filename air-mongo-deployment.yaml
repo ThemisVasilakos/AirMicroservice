@@ -19,7 +19,7 @@ spec:
             - containerPort: 27017
           volumeMounts:
             - name: air-mongodb-data
-              mountPath: /data/db
+              mountPath: /data/air-db
   volumes:
     - name: air-mongodb-data
       persistentVolumeClaim:
