@@ -5,9 +5,7 @@ import gr.vasilakos.air.airmicroservice.model.AirData;
 import gr.vasilakos.air.airmicroservice.repository.AirDataRepository;
 import org.springframework.stereotype.Service;
 import java.time.Instant;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -49,29 +47,5 @@ public class AirDataService {
                 .coordinates(airData.getCoordinates())
                 .build();
     }
-// Old method for creating data
-//    public AirData createData(){
-//        AirData airData = AirData.builder()
-//                .airTemperature(25.0)
-//                .airHumidity(32.0)
-//                .airC02(347.0)
-//                .airVOCs(7.8)
-//                .airPM25(5.4)
-//                .airC0(0.98)
-//                .timestamp(Instant.now())
-//                .coordinates("Athens")
-//                .build();
-//
-//        userToNotifyService.getNotifyUserList(airData);
-//        return airDataRepository.save(airData);
-//    }
-//
-//    private String getRandomEuropeanCapital() {
-//        Random random = new Random();
-//        int randomIndex = random.nextInt(europeanCapitals.size());
-//        return europeanCapitals.get(randomIndex);
-//    }
-//
-//    private static final List<String> europeanCapitals = Arrays.asList(
-//            "Athens", "Berlin", "Paris", "Madrid", "Rome", "London", "Lisbon", "Amsterdam", "Vienna", "Brussels");
+
 }

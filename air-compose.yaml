@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  air-microservice:
+    image: air-microservice:latest
+    ports:
+      - "8080"
+    environment:
+      SPRING_DATA_MONGODB_HOST: mongodb
+      SPRING_DATA_MONGODB_PORT: 27017
+      SPRING_DATA_MONGODB_DATABASE: air
+      SPRING_DATA_MONGODB_AUTHENTICATION: admin
+      SPRING_RABBITMQ_HOST: rabbitmq
+      SPRING_RABBITMQ_PORT: 5672
+      SPRING_RABBITMQ_USERNAME: guest
+      SPRING_RABBITMQ_PASSWORD: guest
+      RABBITMQ_AIR_QUEUE_NAME: air.notification.queue
+      RABBITMQ_EXCHANGE_NAME: notification.exchange
+      RABBITMQ_AIR_ROUTING_KEY: air.queue.user.notification
+      EUREKA_CLIENT_SERVICE_URL: http://eureka-server:8761/eureka/
+    depends_on:
+      - mongodb
+    networks:
+      - environment-pollution-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - type: bind
+        source: Documents/pollution/air-db
+        target: /pollution/air-db
+    networks:
+      - environment-pollution-network
+
+networks:
+  environment-pollution-network:
+    external: true
+    name: project_environment-pollution-network

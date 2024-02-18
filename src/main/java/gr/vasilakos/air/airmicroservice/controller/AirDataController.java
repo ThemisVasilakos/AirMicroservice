@@ -1,7 +1,6 @@
 package gr.vasilakos.air.airmicroservice.controller;
 
 import gr.vasilakos.air.airmicroservice.dto.AirDataDto;
-import gr.vasilakos.air.airmicroservice.model.AirData;
 import gr.vasilakos.air.airmicroservice.service.AirDataService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -34,11 +33,5 @@ public class AirDataController {
     ){
         return new ResponseEntity<>(airDataService.findLastEntry(location), HttpStatus.OK);
     }
-// Old method for creating data
-//    @PostMapping("/create")
-//    public AirData createEntry(){
-//
-//        return airDataService.createData();
-//    }
 
 }
